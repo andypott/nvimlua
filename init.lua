@@ -6,6 +6,6 @@ require('keybindings')
 -- https://www.nerdfonts.com/font-downloads
 require('lualine').setup {
     options = {
-        icons_enabled = false,
+        icons_enabled = true,
     }
 }
