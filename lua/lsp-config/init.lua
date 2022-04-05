@@ -30,27 +30,12 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { 'tsserver', 'cssls' , 'html' }
-local lspconfig = require('lspconfig')
-for _, lsp in pairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capablities = capabilities,
-  }
-end
-
 local luasnip = require('luasnip')
 
 local cmp = require 'cmp'
 cmp.setup {
   snippet = {
     expand = function(args)
-        print(args.body)
       luasnip.lsp_expand(args.body)
     end,
   },
@@ -84,10 +69,22 @@ cmp.setup {
       end
     end,
   },
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-  }, {
-      { name = 'buffer' },
-  })
+  }
 }
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'tsserver', 'cssls' , 'html' }
+local lspconfig = require('lspconfig')
+for _, lsp in pairs(servers) do
+  lspconfig[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
+end
