@@ -16,4 +16,5 @@ return require("packer").startup(function()
     use "L3MON4D3/LuaSnip"
 
     use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+
 end)
