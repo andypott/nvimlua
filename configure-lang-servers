@@ -53,9 +53,12 @@ function getNodeServers() {
   "license": "ISC",
   "dependencies": {
     "bash-language-server": "*",
+    "eslint": "*",
     "prettier": "*",
     "typescript": "*",
     "typescript-language-server": "*",
+    "@typescript-eslint/parser": "*",
+    "@typescript-eslint/eslint-plugin": "*",
     "vscode-langservers-extracted": "*" 
   }
 }
